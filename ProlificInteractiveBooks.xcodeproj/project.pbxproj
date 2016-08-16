@@ -7,17 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A1ABEDB886123835E7BD338 /* Pods_ProlificInteractiveBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1C8B2ABB487B759BAD5C31 /* Pods_ProlificInteractiveBooks.framework */; };
 		73D35CC01D635EBB00906F01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D35CBF1D635EBB00906F01 /* AppDelegate.swift */; };
-		73D35CC21D635EBB00906F01 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D35CC11D635EBB00906F01 /* ViewController.swift */; };
+		73D35CC21D635EBB00906F01 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D35CC11D635EBB00906F01 /* MainVC.swift */; };
 		73D35CC51D635EBB00906F01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D35CC31D635EBB00906F01 /* Main.storyboard */; };
 		73D35CC71D635EBB00906F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73D35CC61D635EBB00906F01 /* Assets.xcassets */; };
 		73D35CCA1D635EBB00906F01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D35CC81D635EBB00906F01 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C1C8B2ABB487B759BAD5C31 /* Pods_ProlificInteractiveBooks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProlificInteractiveBooks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		605DC6DAA3F5F108F7231AD3 /* Pods-ProlificInteractiveBooks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProlificInteractiveBooks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProlificInteractiveBooks/Pods-ProlificInteractiveBooks.debug.xcconfig"; sourceTree = "<group>"; };
+		716084157F7FC837A343359C /* Pods-ProlificInteractiveBooks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProlificInteractiveBooks.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProlificInteractiveBooks/Pods-ProlificInteractiveBooks.release.xcconfig"; sourceTree = "<group>"; };
 		73D35CBC1D635EBB00906F01 /* ProlificInteractiveBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProlificInteractiveBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D35CBF1D635EBB00906F01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		73D35CC11D635EBB00906F01 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		73D35CC11D635EBB00906F01 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		73D35CC41D635EBB00906F01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		73D35CC61D635EBB00906F01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		73D35CC91D635EBB00906F01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -29,17 +33,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A1ABEDB886123835E7BD338 /* Pods_ProlificInteractiveBooks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		68BD86CB2E11F5849D949F78 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				605DC6DAA3F5F108F7231AD3 /* Pods-ProlificInteractiveBooks.debug.xcconfig */,
+				716084157F7FC837A343359C /* Pods-ProlificInteractiveBooks.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		73D35CB31D635EBA00906F01 = {
 			isa = PBXGroup;
 			children = (
 				73D35CBE1D635EBB00906F01 /* ProlificInteractiveBooks */,
 				73D35CBD1D635EBB00906F01 /* Products */,
+				68BD86CB2E11F5849D949F78 /* Pods */,
+				859A4233A5632E71E3D13C8E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,13 +71,45 @@
 			isa = PBXGroup;
 			children = (
 				73D35CBF1D635EBB00906F01 /* AppDelegate.swift */,
-				73D35CC11D635EBB00906F01 /* ViewController.swift */,
+				73DB59A21D6361B200BBE6BD /* Controllers */,
+				73DB59A11D6361AC00BBE6BD /* View */,
+				73DB59A01D6361A100BBE6BD /* Model */,
 				73D35CC31D635EBB00906F01 /* Main.storyboard */,
-				73D35CC61D635EBB00906F01 /* Assets.xcassets */,
 				73D35CC81D635EBB00906F01 /* LaunchScreen.storyboard */,
+				73D35CC61D635EBB00906F01 /* Assets.xcassets */,
 				73D35CCB1D635EBB00906F01 /* Info.plist */,
 			);
 			path = ProlificInteractiveBooks;
+			sourceTree = "<group>";
+		};
+		73DB59A01D6361A100BBE6BD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		73DB59A11D6361AC00BBE6BD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		73DB59A21D6361B200BBE6BD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				73D35CC11D635EBB00906F01 /* MainVC.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		859A4233A5632E71E3D13C8E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5C1C8B2ABB487B759BAD5C31 /* Pods_ProlificInteractiveBooks.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +119,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 73D35CCE1D635EBB00906F01 /* Build configuration list for PBXNativeTarget "ProlificInteractiveBooks" */;
 			buildPhases = (
+				F71E9B2F409DBD257E19801A /* [CP] Check Pods Manifest.lock */,
 				73D35CB81D635EBA00906F01 /* Sources */,
 				73D35CB91D635EBA00906F01 /* Frameworks */,
 				73D35CBA1D635EBA00906F01 /* Resources */,
+				EB0BA6A301F60048CDD2C2B6 /* [CP] Embed Pods Frameworks */,
+				65407F9726D22C00F3942C82 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,12 +181,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		65407F9726D22C00F3942C82 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProlificInteractiveBooks/Pods-ProlificInteractiveBooks-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB0BA6A301F60048CDD2C2B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProlificInteractiveBooks/Pods-ProlificInteractiveBooks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F71E9B2F409DBD257E19801A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		73D35CB81D635EBA00906F01 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73D35CC21D635EBB00906F01 /* ViewController.swift in Sources */,
+				73D35CC21D635EBB00906F01 /* MainVC.swift in Sources */,
 				73D35CC01D635EBB00906F01 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,6 +346,7 @@
 		};
 		73D35CCF1D635EBB00906F01 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 605DC6DAA3F5F108F7231AD3 /* Pods-ProlificInteractiveBooks.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ProlificInteractiveBooks/Info.plist;
@@ -258,6 +358,7 @@
 		};
 		73D35CD01D635EBB00906F01 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 716084157F7FC837A343359C /* Pods-ProlificInteractiveBooks.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ProlificInteractiveBooks/Info.plist;
@@ -286,6 +387,7 @@
 				73D35CD01D635EBB00906F01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
