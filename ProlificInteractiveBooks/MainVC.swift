@@ -89,7 +89,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     }
     
+     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            booksArray.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            bookTableView.reloadData()
+
+    }
     
+    }
     
     
 
