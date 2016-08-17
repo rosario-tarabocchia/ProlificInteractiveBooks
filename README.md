@@ -15,3 +15,14 @@ Things to improve:
 
     When typing in the search bar can I have it search by title and author?
 
+Day 2-
+
+Built out the Add Book page and the Details Page. Decided to give the user the ability to checkout out a book from the Details page as well as edit the books information. Most of the logic is built out with the exception of the API calls which I will tackle tomorrow. Only ran into some minor issues but they where quickly sorted out when I realized my mistakes with my logic. 
+
+Bugs to go back and fix:
+  All the coding seems to work as it should (for now).
+
+Things to improve:
+  Would like to add feature where the user can also return a book but that would require changes to the API.
+
+

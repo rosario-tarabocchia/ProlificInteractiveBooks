@@ -17,7 +17,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     var inSeachMode = false
     
     @IBOutlet weak var searchBar: UISearchBar!
-
+    
     @IBOutlet weak var bookTableView: UITableView!
     
     
@@ -39,10 +39,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
     }
     
-
- // Table View Functions
+    
+    // Table View Functions
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
         return 1
     }
     
@@ -53,57 +54,73 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             return filteredBooksArray.count
             
         }
-        
+            
         else {
-        
-        return booksArray.count
+            
+            return booksArray.count
             
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("BookCell") as? BookCellTableViewCell {
-        
             
             if inSeachMode {
                 
                 book = filteredBooksArray[indexPath.row]
                 cell.configureCell(book)
             }
-            
+                
             else {
                 
                 book = booksArray[indexPath.row]
                 cell.configureCell(book)
             }
             
-            
-            
             return cell
+            
         }
-        
+            
         else {
             
             return BookCellTableViewCell()
+            
         }
-    
+        
     }
     
-     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
             booksArray.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             bookTableView.reloadData()
-
+            
+        }
+        
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let bookSelection : Book!
+        
+        
+        if inSeachMode {
+            
+            bookSelection = filteredBooksArray[indexPath.row]
+            
+        } else {
+            
+            bookSelection = booksArray[indexPath.row]
+            
+        }
+        
+        performSegueWithIdentifier("checkoutEditSegue", sender: bookSelection)
+        
     }
     
     
-
-    @IBAction func addBookToList(sender: AnyObject) {
-    }
+    
+    
     @IBAction func clearAllBooks(sender: AnyObject) {
     }
     
@@ -124,20 +141,20 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                     
                     self.booksArray.append(bookItem)
                     
-                    }
                 }
+            }
             
             self.bookTableView.reloadData()
             
-            }
+        }
         
         completed()
-            
-        }
+        
+    }
     
     
     
-// Search Bar Functions
+    // Search Bar Functions
     // BUG: Keyboard wont dismiss
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -151,7 +168,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         resignFirstResponder()
     }
     
-
+    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchBar.text == nil || searchBar.text == "" {
@@ -161,7 +178,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             resignFirstResponder()
             
         }
-        
+            
         else {
             
             inSeachMode = true
@@ -173,7 +190,37 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             
         }
     }
-
-
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        print("ARE YOU GETTING CALLED?")
+        
+        if segue.identifier == "checkoutEditSegue" {
+            
+            if let bookDetails = segue.destinationViewController as? CheckoutEditVC {
+                
+                
+                print("GEETING TO IF LET INSIDE BOOK DETAILS")
+                
+                if let book = sender as? Book  {
+                    
+                    print(book.title)
+                    print(book.author)
+                    
+                    bookDetails.book = book
+                    
+                    
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
+    
+    
+    
 }
 

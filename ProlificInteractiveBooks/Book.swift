@@ -47,7 +47,7 @@ class Book {
             
         }
         
-        return _author
+        return _tags
     }
     
     var publisher: String {
@@ -61,11 +61,12 @@ class Book {
     }
     
     var id: Int {
-
+        
         return _id
     }
     
     var bookUrl: String {
+        
         if _bookUrl == nil {
             
             _bookUrl = ""
@@ -76,6 +77,7 @@ class Book {
     }
     
     var lastCheckoutName: String {
+        
         if _lastCheckoutName == nil {
             
             _lastCheckoutName = ""
@@ -85,12 +87,24 @@ class Book {
         return _lastCheckoutName
     }
     
+    var lastCheckoutDate: String {
+        
+        if _lastCheckoutDate == nil {
+            
+            _lastCheckoutDate = ""
+            
+        }
+        
+        return _lastCheckoutDate
+        
+    }
+    
     
     init(bookDictionary: Dictionary<String, AnyObject>) {
         
         
         if let authorName = bookDictionary["author"] as? String {
-        
+            
             self._author = authorName
             print("AUTHOR \(self._author)")
             
@@ -110,10 +124,30 @@ class Book {
             
         }
         
-        if let publish = bookDictionary["categories"] as? String {
+        if let publish = bookDictionary["publisher"] as? String {
             
             self._publisher = publish
             print("PUBLISHER \(self._publisher)")
+            
+        }
+        
+        if let checkoutDate = bookDictionary["lastCheckedOut"] as? String {
+            
+            self._lastCheckoutDate = checkoutDate
+            
+        }
+        
+        if let checkoutPerson = bookDictionary["lastCheckedOutBy"] as? String {
+            
+            self._lastCheckoutName = checkoutPerson
+            
+            
+        }
+        
+        if let bookID = bookDictionary["id"] as? Int {
+            
+            self._id = bookID
+            
             
         }
         
@@ -121,7 +155,7 @@ class Book {
     }
     
     
-     
+    
     
     
     
