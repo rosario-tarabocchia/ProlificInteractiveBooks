@@ -18,7 +18,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     var apiCalls = APICalls()
     
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var bookTableView: UITableView!
     
     
@@ -30,22 +29,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         bookTableView.delegate = self
         bookTableView.dataSource = self
         searchBar.delegate = self
-        
         searchBar.returnKeyType = UIReturnKeyType.Done
+    
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
         
-        apiCalls.getCall({ (array) -> Void in
-            
-            print("THIS IS IN THE MAIN VC \(array)")
-            
-            self.booksArray = array
-            
-            print("We made it")
-            
-            self.bookTableView.reloadData()
-            
-        })
+        downloadBooks()
+        bookTableView.reloadData()
         
-
     }
     
     // Table View Functions
@@ -110,22 +103,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                     self.bookTableView.reloadData()
                     
-                    
                 }
-                
-            
-            
-            
-            
             })
-            
-            
-            booksArray.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            bookTableView.reloadData()
-            
         }
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -141,7 +121,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             bookSelection = booksArray[indexPath.row]
             
         }
-        
+        print("\(book.lastCheckoutDate)")
         performSegueWithIdentifier("checkoutEditSegue", sender: bookSelection)
         
     }
@@ -151,7 +131,53 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     @IBAction func clearAllBooks(sender: AnyObject) {
         
+        let action: UIAlertController = UIAlertController(title: "Delete All?", message: "Are you sure you want to delete all the books from the list?", preferredStyle: .Alert)
         
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            
+        }
+        
+        action.addAction(cancelAction)
+        
+        let nextAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+            
+            self.apiCalls.deleteAllBooks({(success) -> Void in
+                
+                if success {
+                    
+                    self.booksArray.removeAll()
+                    self.bookTableView.reloadData()
+                    
+                    let alert = UIAlertController(title: "Book List Deleted", message: "You have successfully deleted all the books on the list.", preferredStyle: .Alert)
+                    
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                    
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    
+                } else {
+                    
+                    let alert = UIAlertController(title: "Uh Oh!", message: "Something went wrong. Please try again", preferredStyle: .Alert)
+                    
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                    
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            })
+            
+            
+        }
+        
+        action.addAction(nextAction)
+        
+        self.presentViewController(action, animated: true, completion: nil)
+        
+        
+
     }
     
     // Search Bar Functions
@@ -220,6 +246,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     
     
+    func downloadBooks(){
+        
+        apiCalls.getBooks({ (array) -> Void in
+            
+            self.booksArray = array
+            
+            self.bookTableView.reloadData()
+            
+        })
+    }
     
     
 }

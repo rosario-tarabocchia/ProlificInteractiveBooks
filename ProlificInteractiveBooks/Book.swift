@@ -89,13 +89,16 @@ class Book {
     
     var lastCheckoutDate: String {
         
-        if _lastCheckoutDate == nil {
+        if _lastCheckoutDate == nil || _lastCheckoutDate == "" {
             
-            _lastCheckoutDate = ""
+            _lastCheckoutDate = "1979-09-06 2:14:23 001"
             
         }
         
-        return _lastCheckoutDate
+
+            
+            return reformatDateStamp(_lastCheckoutDate)
+        
         
     }
     
@@ -135,6 +138,8 @@ class Book {
             
             self._lastCheckoutDate = checkoutDate
             
+            print("PUBLISHER \(self._lastCheckoutDate)")
+            
         }
         
         if let checkoutPerson = bookDictionary["lastCheckedOutBy"] as? String {
@@ -156,7 +161,30 @@ class Book {
     
     
     
-    
+    func reformatDateStamp(dateString: String) -> String {
+        
+        print("THIS IS IN THE FUNCTION \(dateString)")
+        
+        var newDate = NSDate()
+        
+        let dateFormatterFromString = NSDateFormatter()
+        dateFormatterFromString.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        newDate = dateFormatterFromString.dateFromString(dateString)!
+        
+        print("\(newDate)")
+        
+        let dateFormatterToString = NSDateFormatter()
+        
+        
+        dateFormatterToString.dateStyle = .LongStyle
+        let newDateString = dateFormatterToString.stringFromDate(newDate)
+        
+        
+        return newDateString
+        
+        
+        
+    }
     
     
     

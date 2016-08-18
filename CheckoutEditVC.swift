@@ -13,30 +13,28 @@ class CheckoutEditVC: UIViewController {
     
     
     var book: Book!
+    var apiCalls = APICalls()
     var titleIsEditing = false
     var authorIsEditing = false
     var publisherIsEditing = false
     var tagsIsEditing = false
     
+    
+    @IBOutlet weak var returnBtn: UIButton!
     @IBOutlet weak var checkoutBtn: UIButton!
     @IBOutlet weak var submitBtn: UIButton!
-    
     @IBOutlet weak var titleTxtFld: UITextField!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var titleEditBtn: UIButton!
-    
     @IBOutlet weak var authorTxtFld: UITextField!
     @IBOutlet weak var authorLbl: UILabel!
     @IBOutlet weak var authorEditBtn: UIButton!
-    
     @IBOutlet weak var publisherTxtFld: UITextField!
     @IBOutlet weak var publisherLbl: UILabel!
     @IBOutlet weak var publisherEditBtn: UIButton!
-    
     @IBOutlet weak var tagsTxtFld: UITextField!
     @IBOutlet weak var tagsLbl: UILabel!
     @IBOutlet weak var tagsEditBtn: UIButton!
-    
     @IBOutlet weak var checkOutByLbl: UILabel!
     
     override func viewDidLoad() {
@@ -46,7 +44,6 @@ class CheckoutEditVC: UIViewController {
         authorTxtFld.hidden = true
         publisherTxtFld.hidden = true
         tagsTxtFld.hidden = true
-        
         titleLbl.text = book.title
         authorLbl.text = book.author
         publisherLbl.text = book.publisher
@@ -56,11 +53,19 @@ class CheckoutEditVC: UIViewController {
         authorTxtFld.text = book.author
         publisherTxtFld.text = book.publisher
         tagsTxtFld.text = book.tags
+        
+        if book.lastCheckoutName == "" {
+            
+            checkOutByLbl.text = ""
+            
+        } else {
+            
+            
+            checkOutByLbl.text = "\(book.lastCheckoutName) on \(book.lastCheckoutDate)"
+            
+        }
 
-        
-        
     }
-    
     
     
     @IBAction func backBtnPressed(sender: AnyObject) {
@@ -86,10 +91,6 @@ class CheckoutEditVC: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
-        
-        
-        
     }
     
     
@@ -178,7 +179,7 @@ class CheckoutEditVC: UIViewController {
             
             if tagsIsEditing {
                 
-                parameters["tags"] = tagsTxtFld.text
+                parameters["categories"] = tagsTxtFld.text
                 tagsLbl.text = tagsTxtFld.text
                 tagsIsEditing = false
                 
@@ -186,7 +187,7 @@ class CheckoutEditVC: UIViewController {
                 
             else {
                 
-                parameters["tags"] = tagsLbl.text
+                parameters["categories"] = tagsLbl.text
                 
             }
             
@@ -199,17 +200,60 @@ class CheckoutEditVC: UIViewController {
             publisherLbl.hidden = false
             tagsLbl.hidden = false
             
-            
-            
-            
-            
-            
-            //Call made here with parameters and ID
-            
-            
+            apiCalls.updateCheckoutOrReturnBook(book.id, parameters: parameters, complete: {(success) -> Void in
+                
+                
+                if success {
+                    
+                    self.titleTxtFld.hidden = true
+                    self.authorTxtFld.hidden = true
+                    self.publisherTxtFld.hidden = true
+                    self.tagsTxtFld.hidden = true
+                    self.titleLbl.hidden = false
+                    self.authorLbl.hidden = false
+                    self.publisherLbl.hidden = false
+                    self.tagsLbl.hidden = false
+                    
+                    
+                } else {
+                    
+                    self.errorNotification()
+                    
+                }
+            })
         }
+    }
+    
+    @IBAction func returnBtnPressed(sender: AnyObject) {
+        
+        var parameters = [String: String]()
+        parameters["lastCheckedOutBy"] = ""
+        
+        
+        self.apiCalls.updateCheckoutOrReturnBook(self.book.id, parameters: parameters, complete: {(success) -> Void in
+            
+            if success {
+                
+                self.checkOutByLbl.text = ""
+      
+                
+            } else {
+                
+                self.errorNotification()
+                
+            }
+        })
+
+        
+        
+        
+        
+        
+        
         
     }
+    
+    
     
     @IBAction func checkoutBtnPressed(sender: AnyObject) {
         
@@ -220,11 +264,11 @@ class CheckoutEditVC: UIViewController {
         let action: UIAlertController = UIAlertController(title: "Checkout", message: "Please enter yout name.", preferredStyle: .Alert)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
-            //Do some stuff
+            
         }
         
         action.addAction(cancelAction)
-        //Create and an option action
+        
         let nextAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
             if inputTextField?.text == nil || inputTextField?.text == "" {
                 print(inputTextField?.text)
@@ -244,7 +288,6 @@ class CheckoutEditVC: UIViewController {
                 
                 parameters["lastCheckedOutBy"] = inputTextField!.text
                 
-                
                 let dateformatterAPI = NSDateFormatter()
                 
                 dateformatterAPI.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
@@ -259,14 +302,22 @@ class CheckoutEditVC: UIViewController {
                 
                 let nowLabel = dateformatterLabel.stringFromDate(NSDate())
                 
-                if let name = inputTextField!.text {
-                
-                self.checkOutByLbl.text = "\(name) on \(nowLabel)"
+                self.apiCalls.updateCheckoutOrReturnBook(self.book.id, parameters: parameters, complete: {(success) -> Void in
                     
-                }
-                
-                // Call made here with ID
-                
+                if success {
+                        
+                        if let name = inputTextField!.text {
+                            
+                            self.checkOutByLbl.text = "\(name) on \(nowLabel)"
+                            
+                        }
+                        
+                    } else {
+                        
+                        self.errorNotification()
+                        
+                    }
+                })
             }
         }
         
@@ -379,9 +430,16 @@ class CheckoutEditVC: UIViewController {
         
     }
     
-    func printSomething(){
+    func errorNotification(){
         
-        print("This is a test")
+        let alert = UIAlertController(title: "Uh Oh!", message: "Something went wrong. Please try again", preferredStyle: .Alert)
+        
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+        
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     

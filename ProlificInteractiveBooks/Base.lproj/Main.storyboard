@@ -39,7 +39,6 @@
                                         </constraints>
                                         <state key="normal" title="Back"/>
                                         <connections>
-                                            <action selector="addBookToList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cD0-4b-tgn"/>
                                             <action selector="backBtnPressed:" destination="p7J-10-tfV" eventType="touchUpInside" id="HJZ-x0-8Zb"/>
                                             <action selector="backButtonPressed:" destination="n9W-ga-PXm" eventType="touchUpInside" id="WUT-Aw-c9y"/>
                                         </connections>
@@ -93,12 +92,22 @@
                                             <action selector="submitButtonPressed:" destination="p7J-10-tfV" eventType="touchUpInside" id="vl3-2e-OIF"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9o-RP-Jvn">
+                                        <rect key="frame" x="266" y="10" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="returnBtnPressed:" destination="p7J-10-tfV" eventType="touchUpInside" id="n1n-EJ-XhE"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="G9o-RP-Jvn" secondAttribute="bottom" constant="10" id="8nB-OT-Cft"/>
+                                    <constraint firstItem="G9o-RP-Jvn" firstAttribute="top" secondItem="cgT-H9-em5" secondAttribute="top" constant="10" id="Bun-Qo-6hi"/>
                                     <constraint firstItem="Czj-AS-FqT" firstAttribute="centerY" secondItem="cgT-H9-em5" secondAttribute="centerY" id="ild-7C-N9E"/>
                                     <constraint firstAttribute="height" constant="50" id="thO-Cr-dyS"/>
                                     <constraint firstItem="Czj-AS-FqT" firstAttribute="centerX" secondItem="cgT-H9-em5" secondAttribute="centerX" id="xLZ-kh-bhQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="G9o-RP-Jvn" secondAttribute="trailing" constant="8" id="zjQ-mx-4d3"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oek-ie-8Ea">
@@ -138,7 +147,7 @@
                                                 <rect key="frame" x="0.0" y="14" width="288" height="40"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter book title here." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3WO-Ue-40x">
-                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="M0l-me-Nvq"/>
                                                         </constraints>
@@ -146,7 +155,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Book Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dd-4C-LyQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="40"/>
+                                                        <rect key="frame" x="0.0" y="40" width="288" height="0.0"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="RDA-JJ-LwN"/>
                                                         </constraints>
@@ -321,6 +330,7 @@
                         <outlet property="publisherEditBtn" destination="9s7-s4-i5m" id="HYj-cg-t8a"/>
                         <outlet property="publisherLbl" destination="5lB-21-ZE4" id="IVM-rp-L11"/>
                         <outlet property="publisherTxtFld" destination="Xva-c8-ekB" id="dqk-8y-2Jg"/>
+                        <outlet property="returnBtn" destination="G9o-RP-Jvn" id="QgK-xf-rJm"/>
                         <outlet property="submitBtn" destination="Uun-Nd-sE3" id="clH-eN-vob"/>
                         <outlet property="tagsEditBtn" destination="8Ew-pq-ych" id="Ao3-XL-zl2"/>
                         <outlet property="tagsLbl" destination="EGT-qf-DZZ" id="ps8-2V-bZ4"/>
@@ -376,7 +386,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notebook" translatesAutoresizingMaskIntoConstraints="NO" id="9s0-zR-TNf">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9s0-zR-TNf">
                                                     <rect key="frame" x="5" y="5" width="67" height="55"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="9s0-zR-TNf" secondAttribute="height" multiplier="53:43" id="efz-Cf-LYs"/>
@@ -417,6 +427,7 @@
                                         <connections>
                                             <outlet property="bookAuthorLbl" destination="3oz-88-wk4" id="Khk-Cs-ZSO"/>
                                             <outlet property="bookTitleLbl" destination="neD-B5-9LJ" id="aMz-ZJ-SHo"/>
+                                            <outlet property="cellImage" destination="9s0-zR-TNf" id="d5Y-nq-fql"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -424,24 +435,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQu-CS-Qz6">
                                 <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iww-Y5-v3J">
-                                        <rect key="frame" x="8" y="0.0" width="50" height="50.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="I2z-Cp-o0D"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="T5u-aq-TdT"/>
-                                            <constraint firstAttribute="width" constant="50" id="UsH-We-SHb"/>
-                                        </constraints>
-                                        <state key="normal" title="Add"/>
-                                        <connections>
-                                            <action selector="addBookToList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TXg-P2-S9L"/>
-                                            <segue destination="n9W-ga-PXm" kind="show" identifier="" id="6jN-qP-xwf"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXD-s9-e2j">
                                         <rect key="frame" x="246" y="10" width="66" height="30"/>
                                         <state key="normal" title="Delete All"/>
                                         <connections>
                                             <action selector="clearAllBooks:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vTf-el-y28"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZZ-7b-lSR">
+                                        <rect key="frame" x="19" y="10" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <segue destination="n9W-ga-PXm" kind="show" id="fyK-iQ-zWB"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -451,9 +456,6 @@
                                     <constraint firstAttribute="height" constant="50" id="CJV-q8-nsv"/>
                                     <constraint firstAttribute="bottom" secondItem="yXD-s9-e2j" secondAttribute="bottom" constant="10" id="GcT-TB-8jA"/>
                                     <constraint firstItem="yXD-s9-e2j" firstAttribute="top" secondItem="SQu-CS-Qz6" secondAttribute="top" constant="10" id="ml5-ga-EZ3"/>
-                                    <constraint firstItem="iww-Y5-v3J" firstAttribute="leading" secondItem="SQu-CS-Qz6" secondAttribute="leading" constant="8" id="pfx-QH-pd6"/>
-                                    <constraint firstItem="iww-Y5-v3J" firstAttribute="top" secondItem="SQu-CS-Qz6" secondAttribute="top" id="rbp-o8-K69"/>
-                                    <constraint firstAttribute="bottom" secondItem="iww-Y5-v3J" secondAttribute="bottom" id="taU-Jx-0wR"/>
                                 </constraints>
                             </view>
                             <searchBar contentMode="redraw" placeholder="Search By Title" translatesAutoresizingMaskIntoConstraints="NO" id="xPP-4q-qex">
@@ -524,7 +526,6 @@
                                         </constraints>
                                         <state key="normal" title="Back"/>
                                         <connections>
-                                            <action selector="addBookToList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d18-b9-nKR"/>
                                             <action selector="backButtonPressed:" destination="n9W-ga-PXm" eventType="touchUpInside" id="AZV-4X-prh"/>
                                         </connections>
                                     </button>
@@ -536,7 +537,6 @@
                                         </constraints>
                                         <state key="normal" title="Back"/>
                                         <connections>
-                                            <action selector="addBookToList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KEE-RE-gDj"/>
                                             <action selector="backButtonPressed:" destination="n9W-ga-PXm" eventType="touchUpInside" id="o6z-ST-Rm8"/>
                                         </connections>
                                     </button>
@@ -654,16 +654,12 @@
                         <outlet property="authorTxtFld" destination="YHe-J9-glT" id="Ndw-L9-EQP"/>
                         <outlet property="bookTitleTxtFld" destination="2kO-Im-qYg" id="qbY-ke-UnL"/>
                         <outlet property="publisherTxtFld" destination="OHI-Bh-UUs" id="Z0A-VB-FnP"/>
-                        <outlet property="submitCheckoutBtn" destination="0um-CQ-C61" id="sQf-xi-Fi0"/>
                         <outlet property="tagsTxtFld" destination="pXF-lC-Tue" id="yuY-Uf-UrP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sK1-63-NLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="595" y="331"/>
+            <point key="canvasLocation" x="612" y="659"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="notebook" width="512" height="512"/>
-    </resources>
 </document>
