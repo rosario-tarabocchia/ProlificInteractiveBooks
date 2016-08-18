@@ -12,14 +12,18 @@ import Alamofire
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     var book : Book!
-    var booksArray: [Book] = []
-    var filteredBooksArray: [Book] = []
+    var booksArray = [Book]()
+    var filteredBooksArray = [Book]()
+    var availableBooksArray = [Book]()
+    var bothFilterSearchArray = [Book]()
     var inSeachMode = false
     var apiCalls = APICalls()
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBookBar: UISearchBar!
     @IBOutlet weak var bookTableView: UITableView!
     
+    @IBOutlet weak var bookAvailableLbl: UILabel!
+    @IBOutlet weak var bookSwitchOutlet: UISwitch!
     
     
     
@@ -28,8 +32,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
         bookTableView.delegate = self
         bookTableView.dataSource = self
-        searchBar.delegate = self
-        searchBar.returnKeyType = UIReturnKeyType.Done
+        searchBookBar.delegate = self
+        searchBookBar.returnKeyType = UIReturnKeyType.Done
     
     }
     
@@ -37,6 +41,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         super.viewDidAppear(true)
         
         downloadBooks()
+        searchBookBar.text = ""
+        inSeachMode = false
+        bookSwitchOutlet.on = false
         bookTableView.reloadData()
         
     }
@@ -50,7 +57,19 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if inSeachMode {
+        if inSeachMode && bookSwitchOutlet.on {
+            
+            return bothFilterSearchArray.count
+            
+        }
+            
+        else if !inSeachMode && bookSwitchOutlet.on {
+            
+            return availableBooksArray.count
+            
+        }
+            
+        else if inSeachMode && !bookSwitchOutlet.on {
             
             return filteredBooksArray.count
             
@@ -66,16 +85,32 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("BookCell") as? BookCellTableViewCell {
             
-            if inSeachMode {
+            if inSeachMode && bookSwitchOutlet.on {
+                
+                book = bothFilterSearchArray[indexPath.row]
+                cell.configureCell(book)
+                
+            }
+                
+            else if !inSeachMode && bookSwitchOutlet.on {
+                
+                book = availableBooksArray[indexPath.row]
+                cell.configureCell(book)
+                
+            }
+                
+            else if inSeachMode && !bookSwitchOutlet.on {
                 
                 book = filteredBooksArray[indexPath.row]
                 cell.configureCell(book)
+                
             }
                 
             else {
                 
                 book = booksArray[indexPath.row]
                 cell.configureCell(book)
+                
             }
             
             return cell
@@ -111,16 +146,29 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let bookSelection : Book!
         
-        
-        if inSeachMode {
+        if inSeachMode && bookSwitchOutlet.on {
+            
+            bookSelection = bothFilterSearchArray[indexPath.row]
+            
+        }
+            
+        else if !inSeachMode && bookSwitchOutlet.on {
+            
+            bookSelection = availableBooksArray[indexPath.row]
+            
+        }
+            
+        else if inSeachMode && !bookSwitchOutlet.on {
             
             bookSelection = filteredBooksArray[indexPath.row]
             
-        } else {
+        }
+            
+        else {
             
             bookSelection = booksArray[indexPath.row]
-            
         }
+        
         print("\(book.lastCheckoutDate)")
         performSegueWithIdentifier("checkoutEditSegue", sender: bookSelection)
         
@@ -185,13 +233,18 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
-        view.endEditing(false)
+        self.view.endEditing(true)
         
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        view.endEditing(true)
-        resignFirstResponder()
+        
+        
+
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        self.view.endEditing(true)
     }
     
     
@@ -201,16 +254,26 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             
             inSeachMode = false
             bookTableView.reloadData()
-            resignFirstResponder()
+            self.view.endEditing(true)
             
         }
             
         else {
             
             inSeachMode = true
+            
             let enteredText = searchBar.text!.lowercaseString
             
-            filteredBooksArray = booksArray.filter({$0.title.lowercaseString.rangeOfString(enteredText) != nil})
+            if bookSwitchOutlet.on {
+                
+                bothFilterSearchArray = filterArraysWithMultipleParameters(availableBooksArray, enteredText: enteredText)
+
+                
+        } else {
+                
+                filteredBooksArray = filterArraysWithMultipleParameters(booksArray, enteredText: enteredText)
+                
+            }
             
             bookTableView.reloadData()
             
@@ -258,5 +321,62 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     
     
+    @IBAction func bookSwitch(sender: AnyObject) {
+        
+        if bookSwitchOutlet.on {
+            
+            bookAvailableLbl.text = "Books available"
+            
+            if inSeachMode {
+                
+                bothFilterSearchArray = filteredBooksArray.filter({$0.lastCheckoutName == ""})
+            } else {
+            
+            availableBooksArray = booksArray.filter({$0.lastCheckoutName == ""})
+                
+            }
+
+        } else {
+            
+            
+            bookAvailableLbl.text = "All Books"
+            print("Switch is off")
+            //            bookSwitchOutlet.setOn(false, animated:true)
+
+        }
+        
+        bookTableView.reloadData()
+    }
+        
+override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        searchBookBar.resignFirstResponder()
+        return true
+    }
+    
+    
+    func filterArraysWithMultipleParameters(array: [Book], enteredText: String) -> [Book] {
+        
+        var newArray = [Book]()
+        
+        newArray = array.filter({$0.title.lowercaseString.rangeOfString(enteredText) != nil})
+        
+        newArray += array.filter({$0.author.lowercaseString.rangeOfString(enteredText) != nil})
+        
+        newArray += array.filter({$0.tags.lowercaseString.rangeOfString(enteredText) != nil})
+        
+        newArray += array.filter({$0.publisher.lowercaseString.rangeOfString(enteredText) != nil})
+        
+        return newArray
+        
+        
+    }
+        
+
 }
 

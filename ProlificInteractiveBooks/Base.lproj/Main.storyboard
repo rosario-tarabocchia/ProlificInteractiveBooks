@@ -376,7 +376,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="V0f-WX-S2c">
-                                <rect key="frame" x="0.0" y="145" width="320" height="285"/>
+                                <rect key="frame" x="0.0" y="145" width="320" height="262"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookCell" id="gdm-eb-1h8" customClass="BookCellTableViewCell" customModule="ProlificInteractiveBooks" customModuleProvider="target">
@@ -449,6 +449,13 @@
                                             <segue destination="n9W-ga-PXm" kind="show" id="fyK-iQ-zWB"/>
                                         </connections>
                                     </button>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cj4-1p-jdc">
+                                        <rect key="frame" x="136" y="8" width="51" height="31"/>
+                                        <color key="onTintColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="bookSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="hYH-uF-j3L"/>
+                                        </connections>
+                                    </switch>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -466,11 +473,17 @@
                                 <color key="barTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All Books" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3X-UG-3xR">
+                                <rect key="frame" x="0.0" y="407" width="320" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="SQu-CS-Qz6" secondAttribute="bottom" id="1Zr-lg-538"/>
-                            <constraint firstItem="SQu-CS-Qz6" firstAttribute="top" secondItem="V0f-WX-S2c" secondAttribute="bottom" id="25D-TM-nYZ"/>
+                            <constraint firstItem="I3X-UG-3xR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6hr-Rf-uk2"/>
                             <constraint firstItem="V0f-WX-S2c" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="7gA-ua-3VQ"/>
                             <constraint firstAttribute="trailing" secondItem="Tar-XK-DlN" secondAttribute="trailing" id="8D8-g9-hAm"/>
                             <constraint firstItem="Tar-XK-DlN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="OTp-iQ-Mnp"/>
@@ -478,16 +491,21 @@
                             <constraint firstItem="Tar-XK-DlN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VTo-BA-qDR"/>
                             <constraint firstAttribute="trailing" secondItem="V0f-WX-S2c" secondAttribute="trailing" id="bSM-qk-0Rv"/>
                             <constraint firstItem="V0f-WX-S2c" firstAttribute="top" secondItem="xPP-4q-qex" secondAttribute="bottom" id="bpD-Nh-0ot"/>
+                            <constraint firstItem="I3X-UG-3xR" firstAttribute="top" secondItem="V0f-WX-S2c" secondAttribute="bottom" id="dNC-yn-Mfu"/>
                             <constraint firstAttribute="trailing" secondItem="SQu-CS-Qz6" secondAttribute="trailing" id="i55-lz-jBh"/>
                             <constraint firstItem="SQu-CS-Qz6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ngo-5G-YZa"/>
                             <constraint firstItem="xPP-4q-qex" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qCs-zQ-IcL"/>
                             <constraint firstAttribute="trailing" secondItem="xPP-4q-qex" secondAttribute="trailing" id="qW5-bp-7fG"/>
+                            <constraint firstAttribute="trailing" secondItem="I3X-UG-3xR" secondAttribute="trailing" id="qYk-Yo-h1n"/>
+                            <constraint firstItem="SQu-CS-Qz6" firstAttribute="top" secondItem="I3X-UG-3xR" secondAttribute="bottom" constant="2" id="wq3-bR-vdf"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="bookAvailableLbl" destination="I3X-UG-3xR" id="LFp-sg-mi5"/>
+                        <outlet property="bookSwitchOutlet" destination="cj4-1p-jdc" id="TI0-Pb-ahx"/>
                         <outlet property="bookTableView" destination="V0f-WX-S2c" id="9w3-iL-ddR"/>
-                        <outlet property="searchBar" destination="xPP-4q-qex" id="mI6-EM-p2G"/>
+                        <outlet property="searchBookBar" destination="xPP-4q-qex" id="L6y-vV-QHX"/>
                         <segue destination="p7J-10-tfV" kind="show" identifier="checkoutEditSegue" id="GdI-dy-M4N"/>
                     </connections>
                 </viewController>

@@ -91,7 +91,7 @@ class Book {
         
         if _lastCheckoutDate == nil || _lastCheckoutDate == "" {
             
-            _lastCheckoutDate = "1979-09-06 2:14:23 001"
+            _lastCheckoutDate = "1979-09-06 2:14:23"
             
         }
         

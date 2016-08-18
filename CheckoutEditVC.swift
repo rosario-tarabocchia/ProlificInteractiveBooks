@@ -290,7 +290,7 @@ class CheckoutEditVC: UIViewController {
                 
                 let dateformatterAPI = NSDateFormatter()
                 
-                dateformatterAPI.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+                dateformatterAPI.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 let nowAPI = dateformatterAPI.stringFromDate(NSDate())
                 
