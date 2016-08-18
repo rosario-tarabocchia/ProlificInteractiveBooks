@@ -65,7 +65,7 @@ class AddBookVC: UIViewController {
             
             let parameters = ["title": "test", "author": "test"]
             
-            uploadBook(parameters, completed:{})
+//            uploadBook(parameters, completed:{})
             
             
             
@@ -79,15 +79,15 @@ class AddBookVC: UIViewController {
         
     }
     
-    func uploadBook(parameter: [String: AnyObject], completed: DownloadComplete) {
-        
-        let currentBooksUrl = NSURL(string: "\(URL_BASE)\(URL_BOOKS)")!
-        
-        
-        Alamofire.request(.POST, currentBooksUrl, parameters: parameter, encoding: .JSON, headers: nil)
-        
-        completed()
-        
+//    func uploadBook(parameter: [String: AnyObject], completed: DownloadComplete) {
+//        
+//        let currentBooksUrl = NSURL(string: "\(URL_BASE)\(URL_BOOKS)")!
+//        
+//        
+//        Alamofire.request(.POST, currentBooksUrl, parameters: parameter, encoding: .JSON, headers: nil)
+//        
+//        completed()
+    
 
         
         
@@ -97,7 +97,7 @@ class AddBookVC: UIViewController {
         
         
         
-    }
+//    }
     
 
 

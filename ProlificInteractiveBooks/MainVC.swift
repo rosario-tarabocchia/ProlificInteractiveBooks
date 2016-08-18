@@ -15,6 +15,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     var booksArray: [Book] = []
     var filteredBooksArray: [Book] = []
     var inSeachMode = false
+    var apiCalls = APICalls()
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -32,13 +33,20 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
         searchBar.returnKeyType = UIReturnKeyType.Done
         
-        self.downloadBooks(){
+        apiCalls.getCall({ (array) -> Void in
+            
+            print("THIS IS IN THE MAIN VC \(array)")
+            
+            self.booksArray = array
+            
+            print("We made it")
             
             self.bookTableView.reloadData()
-        }
+            
+        })
         
+
     }
-    
     
     // Table View Functions
     
@@ -91,7 +99,27 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
+           
+            book = booksArray[indexPath.row]
+
+            apiCalls.deleteOneBook(book.id, complete: {(success) -> Void in
+            
+                if success {
+                    
+                    self.booksArray.removeAtIndex(indexPath.row)
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    self.bookTableView.reloadData()
+                    
+                    
+                }
+                
+            
+            
+            
+            
+            })
+            
+            
             booksArray.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             bookTableView.reloadData()
@@ -122,37 +150,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     
     @IBAction func clearAllBooks(sender: AnyObject) {
-    }
-    
-    
-    func downloadBooks(completed: DownloadComplete) {
         
-        let currentBooksUrl = NSURL(string: "\(URL_BASE)\(URL_BOOKS)")!
-        
-        Alamofire.request(.GET, currentBooksUrl).responseJSON { response in
-            
-            let result = response.result
-            
-            if let array = result.value as? [Dictionary<String, AnyObject>] {
-                
-                for obj in array {
-                    
-                    let bookItem = Book(bookDictionary: obj)
-                    
-                    self.booksArray.append(bookItem)
-                    
-                }
-            }
-            
-            self.bookTableView.reloadData()
-            
-        }
-        
-        completed()
         
     }
-    
-    
     
     // Search Bar Functions
     // BUG: Keyboard wont dismiss

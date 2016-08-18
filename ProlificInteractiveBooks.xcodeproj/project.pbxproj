@@ -10,6 +10,7 @@
 		1A1ABEDB886123835E7BD338 /* Pods_ProlificInteractiveBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1C8B2ABB487B759BAD5C31 /* Pods_ProlificInteractiveBooks.framework */; };
 		7353B7C21D64B495002EC332 /* AddBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353B7C11D64B495002EC332 /* AddBookVC.swift */; };
 		7353B7C81D64D573002EC332 /* CheckoutEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353B7C71D64D573002EC332 /* CheckoutEditVC.swift */; };
+		73CEECB01D653EE800151A8C /* APICalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CEECAF1D653EE800151A8C /* APICalls.swift */; };
 		73D35CC01D635EBB00906F01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D35CBF1D635EBB00906F01 /* AppDelegate.swift */; };
 		73D35CC21D635EBB00906F01 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D35CC11D635EBB00906F01 /* MainVC.swift */; };
 		73D35CC51D635EBB00906F01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D35CC31D635EBB00906F01 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 		716084157F7FC837A343359C /* Pods-ProlificInteractiveBooks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProlificInteractiveBooks.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProlificInteractiveBooks/Pods-ProlificInteractiveBooks.release.xcconfig"; sourceTree = "<group>"; };
 		7353B7C11D64B495002EC332 /* AddBookVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookVC.swift; sourceTree = "<group>"; };
 		7353B7C71D64D573002EC332 /* CheckoutEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckoutEditVC.swift; path = ../CheckoutEditVC.swift; sourceTree = "<group>"; };
+		73CEECAF1D653EE800151A8C /* APICalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICalls.swift; sourceTree = "<group>"; };
 		73D35CBC1D635EBB00906F01 /* ProlificInteractiveBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProlificInteractiveBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D35CBF1D635EBB00906F01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73D35CC11D635EBB00906F01 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				73DB59A51D63712800BBE6BD /* Book.swift */,
+				73CEECAF1D653EE800151A8C /* APICalls.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			files = (
 				73DB59A81D637B9E00BBE6BD /* Constants.swift in Sources */,
 				7353B7C21D64B495002EC332 /* AddBookVC.swift in Sources */,
+				73CEECB01D653EE800151A8C /* APICalls.swift in Sources */,
 				73DB59A61D63712800BBE6BD /* Book.swift in Sources */,
 				7353B7C81D64D573002EC332 /* CheckoutEditVC.swift in Sources */,
 				73D35CC21D635EBB00906F01 /* MainVC.swift in Sources */,

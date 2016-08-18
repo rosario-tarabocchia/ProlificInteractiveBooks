@@ -230,6 +230,12 @@ class CheckoutEditVC: UIViewController {
                 print(inputTextField?.text)
                 print("Not doing anything")
                 
+                let alert = UIAlertController(title: "Tisk Tisk Tisk!", message: "You must provide your name to check out a book. Please try again.", preferredStyle: .Alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
                 
             } else {
                 
@@ -239,15 +245,25 @@ class CheckoutEditVC: UIViewController {
                 parameters["lastCheckedOutBy"] = inputTextField!.text
                 
                 
-                let dateformatter = NSDateFormatter()
+                let dateformatterAPI = NSDateFormatter()
                 
-                dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+                dateformatterAPI.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
                 
-                let now = dateformatter.stringFromDate(NSDate())
+                let nowAPI = dateformatterAPI.stringFromDate(NSDate())
                 
-                parameters["lastCheckedOut"] = now
+                parameters["lastCheckedOut"] = nowAPI
                 
-                self.checkOutByLbl.text = "\(inputTextField!.text) at \(now)"
+                let dateformatterLabel = NSDateFormatter()
+                
+                dateformatterLabel.dateStyle = .LongStyle
+                
+                let nowLabel = dateformatterLabel.stringFromDate(NSDate())
+                
+                if let name = inputTextField!.text {
+                
+                self.checkOutByLbl.text = "\(name) on \(nowLabel)"
+                    
+                }
                 
                 // Call made here with ID
                 

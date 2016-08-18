@@ -8,8 +8,4 @@
 
 import Foundation
 
-let URL_BASE = "http://prolific-interview.herokuapp.com/"
 
-let URL_BOOKS = "57b2232707c56b000966dd3e/books"
-
-typealias DownloadComplete = () -> ()
