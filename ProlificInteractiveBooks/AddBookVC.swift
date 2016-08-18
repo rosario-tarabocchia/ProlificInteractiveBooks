@@ -9,7 +9,7 @@
 import UIKit
 
 
-class AddBookVC: UIViewController {
+class AddBookVC: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var bookTitleTxtFld: UITextField!
@@ -75,5 +75,27 @@ class AddBookVC: UIViewController {
             })
         }
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        hideKeyboard()  
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func hideKeyboard(){
+        
+        authorTxtFld.resignFirstResponder()
+        bookTitleTxtFld.resignFirstResponder()
+        tagsTxtFld.resignFirstResponder()
+        publisherTxtFld.resignFirstResponder()
+        
+        
+    }
+    
     
 }

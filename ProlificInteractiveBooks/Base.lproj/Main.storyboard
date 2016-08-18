@@ -153,6 +153,9 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="p7J-10-tfV" id="lPd-74-uKR"/>
+                                                        </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Book Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dd-4C-LyQ">
                                                         <rect key="frame" x="0.0" y="40" width="288" height="0.0"/>
@@ -195,6 +198,9 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="13"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="p7J-10-tfV" id="gcg-Nn-11C"/>
+                                                        </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Author Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rEB-WB-zey">
                                                         <rect key="frame" x="0.0" y="13" width="288" height="21"/>
@@ -234,6 +240,9 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="12"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="p7J-10-tfV" id="HxX-hh-ZDc"/>
+                                                        </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Publisher Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lB-21-ZE4">
                                                         <rect key="frame" x="0.0" y="12" width="288" height="21"/>
@@ -273,6 +282,9 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="13"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="p7J-10-tfV" id="Jj2-hr-Sqa"/>
+                                                        </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Tags Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGT-qf-DZZ">
                                                         <rect key="frame" x="0.0" y="13" width="288" height="21"/>
@@ -465,13 +477,16 @@
                                     <constraint firstItem="yXD-s9-e2j" firstAttribute="top" secondItem="SQu-CS-Qz6" secondAttribute="top" constant="10" id="ml5-ga-EZ3"/>
                                 </constraints>
                             </view>
-                            <searchBar contentMode="redraw" placeholder="Search By Title" translatesAutoresizingMaskIntoConstraints="NO" id="xPP-4q-qex">
+                            <searchBar contentMode="redraw" placeholder="Search by Title, Author, Publisher, or Tags." translatesAutoresizingMaskIntoConstraints="NO" id="xPP-4q-qex">
                                 <rect key="frame" x="0.0" y="100" width="320" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Oc6-8J-NEl"/>
                                 </constraints>
                                 <color key="barTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="pZE-AB-MKk"/>
+                                </connections>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All Books" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3X-UG-3xR">
                                 <rect key="frame" x="0.0" y="407" width="320" height="21"/>
@@ -609,10 +624,13 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter book title here." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2kO-Im-qYg">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter book title here." minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="2kO-Im-qYg">
                                         <rect key="frame" x="0.0" y="33" width="288" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="n9W-ga-PXm" id="so5-yy-Q6D"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Author:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDg-mq-Yk0">
                                         <rect key="frame" x="0.0" y="65" width="288" height="32"/>
@@ -624,6 +642,9 @@
                                         <rect key="frame" x="0.0" y="97" width="288" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="n9W-ga-PXm" id="vbx-ba-qQz"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publisher:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIo-cy-XqP">
                                         <rect key="frame" x="0.0" y="130" width="288" height="33"/>
@@ -635,6 +656,9 @@
                                         <rect key="frame" x="0.0" y="162" width="288" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="n9W-ga-PXm" id="tFz-yQ-uPs"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qs1-MC-WXl">
                                         <rect key="frame" x="0.0" y="195" width="288" height="32"/>
@@ -646,6 +670,9 @@
                                         <rect key="frame" x="0.0" y="227" width="288" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="n9W-ga-PXm" id="4aJ-Ld-Sq8"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>

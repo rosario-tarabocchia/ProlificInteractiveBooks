@@ -9,7 +9,7 @@
 import UIKit
 import Social
 
-class CheckoutEditVC: UIViewController {
+class CheckoutEditVC: UIViewController, UITextFieldDelegate{
     
     
     var book: Book!
@@ -56,10 +56,9 @@ class CheckoutEditVC: UIViewController {
         
         if book.lastCheckoutName == "" {
             
-            checkOutByLbl.text = ""
+            checkOutByLbl.text = "AVAILABLE"
             
         } else {
-            
             
             checkOutByLbl.text = "\(book.lastCheckoutName) on \(book.lastCheckoutDate)"
             
@@ -441,6 +440,30 @@ class CheckoutEditVC: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
+    
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    func hideKeyboard(){
+        
+        authorTxtFld.resignFirstResponder()
+        titleTxtFld.resignFirstResponder()
+        tagsTxtFld.resignFirstResponder()
+        publisherTxtFld.resignFirstResponder()
+        
+        
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        hideKeyboard()
+        
+    }
+    
     
     
 }

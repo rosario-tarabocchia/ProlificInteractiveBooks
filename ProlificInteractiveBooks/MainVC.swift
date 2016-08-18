@@ -272,6 +272,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         } else {
                 
                 filteredBooksArray = filterArraysWithMultipleParameters(booksArray, enteredText: enteredText)
+            
                 
             }
             
@@ -376,6 +377,13 @@ override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    
         
 
 }
