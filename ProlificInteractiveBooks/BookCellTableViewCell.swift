@@ -17,8 +17,6 @@ class BookCellTableViewCell: UITableViewCell {
     
     func configureCell(book: Book) {
         
-        print(book.lastCheckoutName)
-        
         if book.isAvailable {
             
             cellImage.image = UIImage(named: "available")
@@ -33,5 +31,5 @@ class BookCellTableViewCell: UITableViewCell {
         bookTitleLbl.text = "\(book.title)"
         
     }
-
+    
 }

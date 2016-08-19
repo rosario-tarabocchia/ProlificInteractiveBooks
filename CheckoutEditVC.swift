@@ -38,6 +38,8 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var tagsEditBtn: UIButton!
     @IBOutlet weak var checkOutByLbl: UILabel!
     
+    //MARK: Override Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,7 +64,6 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             
             returnBtn.hidden = true
             
-            
         } else {
             
             checkOutByLbl.text = "\(book.lastCheckoutName) on \(book.lastCheckoutDate)"
@@ -70,11 +71,16 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             availableImage.image = UIImage(named: "check")
             
             checkoutBtn.hidden = true
-            
         }
-
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        hideKeyboard()
+        
+    }
+    
+    //Mark: IBActions
     
     @IBAction func backBtnPressed(sender: AnyObject) {
         
@@ -121,17 +127,11 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         }
     }
     
-    
     @IBAction func submitButtonPressed(sender: AnyObject) {
         
         var parameters = [String: String]()
         
-        
         if titleTxtFld.text == nil || titleTxtFld.text == "" || authorTxtFld.text == nil || authorTxtFld.text == "" {
-            
-            print(titleTxtFld.text)
-            
-            print("Somethign is missing")
             
             let alert = UIAlertController(title: "Uh oh!", message: "You must enter a title and author before submitting.", preferredStyle: .Alert)
             
@@ -139,9 +139,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             
             presentViewController(alert, animated: true, completion: nil)
             
-        }
-            
-        else {
+        } else {
             
             if titleIsEditing {
                 
@@ -149,9 +147,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 titleLbl.text = titleTxtFld.text
                 titleIsEditing = false
                 
-            }
-                
-            else {
+            } else {
                 
                 parameters["title"] = titleLbl.text
                 
@@ -163,9 +159,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 authorLbl.text = authorTxtFld.text
                 authorIsEditing = false
                 
-            }
-                
-            else {
+            } else {
                 
                 parameters["author"] = authorLbl.text
                 
@@ -177,9 +171,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 publisherLbl.text = publisherTxtFld.text
                 publisherIsEditing = false
                 
-            }
-                
-            else {
+            } else {
                 
                 parameters["publisher"] = publisherLbl.text
                 
@@ -191,17 +183,13 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 tagsLbl.text = tagsTxtFld.text
                 tagsIsEditing = false
                 
-            }
-                
-            else {
+            } else {
                 
                 parameters["categories"] = tagsLbl.text
                 
             }
             
-            
             apiCalls.updateCheckoutOrReturnBook(book.id, parameters: parameters, complete: {(success) -> Void in
-                
                 
                 if success {
                     
@@ -222,8 +210,6 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                     self.submitBtn.hidden = true
                     
                     if self.book.isAvailable {
-                        
-                        
                         
                         self.returnBtn.hidden = true
                         self.checkoutBtn.hidden = false
@@ -251,7 +237,6 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         var parameters = [String: String]()
         parameters["lastCheckedOutBy"] = ""
         
-        
         self.apiCalls.updateCheckoutOrReturnBook(self.book.id, parameters: parameters, complete: {(success) -> Void in
             
             if success {
@@ -260,26 +245,14 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 self.returnBtn.hidden = true
                 self.checkoutBtn.hidden = false
                 self.availableImage.image = UIImage(named: "avail")
-                
-      
+                self.book.isAvailable = true
                 
             } else {
                 
                 self.errorNotification()
-                
             }
         })
-
-        
-        
-        
-        
-        
-        
-        
     }
-    
-    
     
     @IBAction func checkoutBtnPressed(sender: AnyObject) {
         
@@ -297,8 +270,6 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         
         let nextAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
             if inputTextField?.text == nil || inputTextField?.text == "" {
-                print(inputTextField?.text)
-                print("Not doing anything")
                 
                 let alert = UIAlertController(title: "Tisk Tisk Tisk!", message: "You must provide your name to check out a book. Please try again.", preferredStyle: .Alert)
                 
@@ -308,9 +279,6 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 
                 
             } else {
-                
-                print(inputTextField?.text)
-                print("Make API call")
                 
                 parameters["lastCheckedOutBy"] = inputTextField!.text
                 
@@ -330,7 +298,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 
                 self.apiCalls.updateCheckoutOrReturnBook(self.book.id, parameters: parameters, complete: {(success) -> Void in
                     
-                if success {
+                    if success {
                         
                         if let name = inputTextField!.text {
                             
@@ -338,6 +306,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                             self.returnBtn.hidden = false
                             self.checkoutBtn.hidden = true
                             self.availableImage.image = UIImage(named: "check")
+                            self.book.isAvailable = false
                             
                         }
                         
@@ -357,14 +326,8 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             inputTextField = textField
         }
         
-        //Present the AlertController
         self.presentViewController(action, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    
     
     @IBAction func titleEditBtnPressed(sender: AnyObject) {
         
@@ -376,26 +339,15 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             
             titleTxtFld.hidden = false
             titleLbl.hidden = true
-
-            
-            print(titleTxtFld.text)
-            
             titleEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
             
-
-            
-            
-        }
-            
-        else {
+        } else {
             
             checkOtherEdits()
             titleTxtFld.resignFirstResponder()
             titleTxtFld.hidden = true
             titleLbl.hidden = false
             titleEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
-
-        
         }
         
     }
@@ -407,25 +359,17 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         if authorIsEditing {
             
             hideCheckoutReturnButtons()
-            
             authorTxtFld.hidden = false
             authorLbl.hidden = true
-            
             authorEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
-
-
             
-        }
-            
-        else {
-            
+        } else {
             
             checkOtherEdits()
             authorTxtFld.resignFirstResponder()
             authorTxtFld.hidden = true
             authorLbl.hidden = false
             authorEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
-            
             
         }
         
@@ -438,24 +382,17 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         if publisherIsEditing {
             
             hideCheckoutReturnButtons()
-            
             publisherTxtFld.hidden = false
             publisherLbl.hidden = true
-            
             publisherEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
-
-
             
-        }
-            
-        else {
+        } else {
             
             checkOtherEdits()
             publisherTxtFld.resignFirstResponder()
             publisherTxtFld.hidden = true
             publisherLbl.hidden = false
             publisherEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
-
             
         }
         
@@ -468,15 +405,11 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         if tagsIsEditing {
             
             hideCheckoutReturnButtons()
-            
             tagsTxtFld.hidden = false
             tagsLbl.hidden = true
-            
             tagsEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
             
-        }
-            
-        else {
+        } else {
             
             checkOtherEdits()
             
@@ -484,19 +417,17 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             tagsTxtFld.hidden = true
             tagsLbl.hidden = false
             tagsEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
-
             
         }
-        
     }
+    
+    //MARK: Functions
     
     func errorNotification(){
         
         let alert = UIAlertController(title: "Uh Oh!", message: "Something went wrong. Please try again", preferredStyle: .Alert)
         
-        
         alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-        
         
         self.presentViewController(alert, animated: true, completion: nil)
         
@@ -507,20 +438,12 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         return false
     }
     
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-       hideKeyboard()
-        
-    }
-    
     func hideKeyboard(){
         
         authorTxtFld.resignFirstResponder()
         titleTxtFld.resignFirstResponder()
         tagsTxtFld.resignFirstResponder()
         publisherTxtFld.resignFirstResponder()
-        
         
     }
     
@@ -549,9 +472,6 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         returnBtn.hidden = true
         checkoutBtn.hidden = true
         
-        
-        
-        
     }
     
     func checkOtherEdits() {
@@ -566,15 +486,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             
             hideSubmitButtons()
             
-            
         }
-        
-        
-        
-        
     }
-
-    
-    
     
 }

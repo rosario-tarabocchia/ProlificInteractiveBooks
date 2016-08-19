@@ -11,7 +11,6 @@ import UIKit
 
 class AddBookVC: UIViewController, UITextFieldDelegate {
     
-    
     @IBOutlet weak var bookTitleTxtFld: UITextField!
     @IBOutlet weak var authorTxtFld: UITextField!
     @IBOutlet weak var publisherTxtFld: UITextField!
@@ -19,10 +18,20 @@ class AddBookVC: UIViewController, UITextFieldDelegate {
     
     var apiCalls = APICalls()
     
+    // MARK: Overide Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        hideKeyboard()
+        
+    }
+    
+    //MARK: IBActions
     
     @IBAction func backButtonPressed(sender: AnyObject) {
         
@@ -36,11 +45,11 @@ class AddBookVC: UIViewController, UITextFieldDelegate {
     }
     
     
+    //MARK: Functions
+    
     func addBook(){
         
         if (bookTitleTxtFld.text == nil || bookTitleTxtFld.text == "") || (authorTxtFld.text == nil || authorTxtFld.text == "") {
-            
-            print("Somethign is missing")
             
             let alert = UIAlertController(title: "Uh oh!", message: "You must enter a title and author before submitting.", preferredStyle: .Alert)
             
@@ -76,13 +85,9 @@ class AddBookVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        hideKeyboard()  
-        
-    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
         self.view.endEditing(true)
         return false
     }
@@ -93,7 +98,6 @@ class AddBookVC: UIViewController, UITextFieldDelegate {
         bookTitleTxtFld.resignFirstResponder()
         tagsTxtFld.resignFirstResponder()
         publisherTxtFld.resignFirstResponder()
-        
         
     }
     

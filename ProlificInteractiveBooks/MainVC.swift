@@ -21,11 +21,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     @IBOutlet weak var searchBookBar: UISearchBar!
     @IBOutlet weak var bookTableView: UITableView!
-    
     @IBOutlet weak var bookAvailableLbl: UILabel!
     @IBOutlet weak var bookSwitchOutlet: UISwitch!
     
-    
+    //MARK: Override Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +33,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         bookTableView.dataSource = self
         searchBookBar.delegate = self
         searchBookBar.returnKeyType = UIReturnKeyType.Done
-    
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -48,7 +47,28 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
     }
     
-    // Table View Functions
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "checkoutEditSegue" {
+            
+            if let bookDetails = segue.destinationViewController as? CheckoutEditVC {
+                
+                if let book = sender as? Book  {
+                    
+                    bookDetails.book = book
+                    
+                }
+            }
+        }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    //MARK: Table View Functions
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -152,11 +172,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             }
             
             
-
-            apiCalls.deleteOneBook(book.id, complete: {(success) -> Void in
             
+            apiCalls.deleteOneBook(book.id, complete: {(success) -> Void in
+                
                 if success {
-
+                    
                     self.removeBookFromAllArrays(self.book)
                     
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
@@ -166,15 +186,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             })
         }
     }
-    
-//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-//        let delete = UITableViewRowAction(style: .Destructive, title: "Delete") { (action, indexPath) in }
-//        
-//                delete.backgroundColor = UIColor(red: 0.925, green: 0.125, blue: 0.141, alpha: 1.0)
-//            
-//            return [delete]
-//        
-//        }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let bookSelection : Book!
@@ -202,13 +213,74 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             bookSelection = booksArray[indexPath.row]
         }
         
-        print("\(book.lastCheckoutDate)")
         performSegueWithIdentifier("checkoutEditSegue", sender: bookSelection)
         
     }
     
+    //MARK: Search Bar Functions
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        self.view.endEditing(true)
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        
+        self.view.endEditing(true)
+    }
+    
+    func searchBarShouldReturn(searchBar: UISearchBar) -> Bool {
+        
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text == nil || searchBar.text == "" {
+            
+            inSeachMode = false
+            bookTableView.reloadData()
+            self.view.endEditing(true)
+            
+        }
+            
+        else {
+            
+            inSeachMode = true
+            
+            let enteredText = searchBar.text!.lowercaseString
+            
+            if bookSwitchOutlet.on {
+                
+                bothFilterSearchArray = filterArraysWithMultipleParameters(availableBooksArray, enteredText: enteredText)
+                
+                
+            } else {
+                
+                filteredBooksArray = filterArraysWithMultipleParameters(booksArray, enteredText: enteredText)
+                
+                
+            }
+            
+            bookTableView.reloadData()
+            
+        }
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        searchBookBar.resignFirstResponder()
+        return true
+    }
     
     
+    //MARK: IBActions
     
     @IBAction func clearAllBooks(sender: AnyObject) {
         
@@ -253,115 +325,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 }
             })
             
-            
         }
         
         action.addAction(nextAction)
         
         self.presentViewController(action, animated: true, completion: nil)
         
-        
-
     }
-    
-    // Search Bar Functions
-    // BUG: Keyboard wont dismiss
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        
-        self.view.endEditing(true)
-        
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.view.endEditing(true)
-
-    }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        self.view.endEditing(true)
-    }
-    
-    func searchBarShouldReturn(searchBar: UISearchBar) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-
-    
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        if searchBar.text == nil || searchBar.text == "" {
-            
-            inSeachMode = false
-            bookTableView.reloadData()
-            self.view.endEditing(true)
-            
-        }
-            
-        else {
-            
-            inSeachMode = true
-            
-            let enteredText = searchBar.text!.lowercaseString
-            
-            if bookSwitchOutlet.on {
-                
-                bothFilterSearchArray = filterArraysWithMultipleParameters(availableBooksArray, enteredText: enteredText)
-
-                
-        } else {
-                
-                filteredBooksArray = filterArraysWithMultipleParameters(booksArray, enteredText: enteredText)
-            
-                
-            }
-            
-            bookTableView.reloadData()
-            
-        }
-    }
-    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        print("ARE YOU GETTING CALLED?")
-        
-        if segue.identifier == "checkoutEditSegue" {
-            
-            if let bookDetails = segue.destinationViewController as? CheckoutEditVC {
-                
-                
-                print("GEETING TO IF LET INSIDE BOOK DETAILS")
-                
-                if let book = sender as? Book  {
-                    
-                    print(book.title)
-                    print(book.author)
-                    
-                    bookDetails.book = book
-                    
-                    
-                    
-                }
-                
-            }
-            
-        }
-    }
-    
-    
-    func downloadBooks(){
-        
-        apiCalls.getBooks({ (array) -> Void in
-            
-            self.booksArray = array
-            
-            self.bookTableView.reloadData()
-            
-        })
-    }
-    
     
     @IBAction func bookSwitch(sender: AnyObject) {
         
@@ -374,35 +344,42 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 
                 bothFilterSearchArray = filteredBooksArray.filter({$0.lastCheckoutName == ""})
             } else {
-            
-            availableBooksArray = booksArray.filter({$0.lastCheckoutName == ""})
+                
+                availableBooksArray = booksArray.filter({$0.lastCheckoutName == ""})
                 
             }
-
-        } else {
             
+        } else {
             
             bookAvailableLbl.text = "all books"
             bookAvailableLbl.textColor = UIColor.darkGrayColor()
-            print("Switch is off")
-            //            bookSwitchOutlet.setOn(false, animated:true)
-
+            
         }
         
         bookTableView.reloadData()
     }
+    
+    @IBAction func prolificBtnPressed(sender: AnyObject) {
         
-override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let openLink = NSURL(string : "http://www.prolificinteractive.com/")
+        UIApplication.sharedApplication().openURL(openLink!)
         
-        self.view.endEditing(true)
         
     }
     
-    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
-        searchBookBar.resignFirstResponder()
-        return true
-    }
     
+    //MARK: Functions
+    
+    func downloadBooks(){
+        
+        apiCalls.getBooks({ (array) -> Void in
+            
+            self.booksArray = array
+            
+            self.bookTableView.reloadData()
+            
+        })
+    }
     
     func filterArraysWithMultipleParameters(array: [Book], enteredText: String) -> [Book] {
         
@@ -426,15 +403,6 @@ override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         return false
     }
     
-    
-    @IBAction func prolificBtnPressed(sender: AnyObject) {
-        
-        let openLink = NSURL(string : "http://www.prolificinteractive.com/")
-        UIApplication.sharedApplication().openURL(openLink!)
-        
-        
-    }
-    
     func removeBookFromAllArrays(book: Book){
         
         self.filteredBooksArray.remove(book)
@@ -444,7 +412,7 @@ override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
     }
     
-
+    
 }
 
 

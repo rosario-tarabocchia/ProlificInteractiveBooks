@@ -96,14 +96,12 @@ class Book {
             
         }
         
-
-            
-            return reformatDateStamp(_lastCheckoutDate)
-        
-        
+        return reformatDateStamp(_lastCheckoutDate)
     }
     
     var isAvailable: Bool {
+        
+        get {
         
         if _lastCheckoutName == "" {
             
@@ -115,7 +113,12 @@ class Book {
             
         }
         
-        return _isAvailable
+            return _isAvailable }
+        
+        set {
+            
+            _isAvailable = newValue
+        }
     }
     
     
@@ -125,28 +128,24 @@ class Book {
         if let authorName = bookDictionary["author"] as? String {
             
             self._author = authorName
-            print("AUTHOR \(self._author)")
             
         }
         
         if let bookTitle = bookDictionary["title"] as? String {
             
             self._title = bookTitle
-            print("TITLE \(self._title)")
             
         }
         
         if let categories = bookDictionary["categories"] as? String {
             
             self._tags = categories
-            print("TAGS \(self._tags)")
             
         }
         
         if let publish = bookDictionary["publisher"] as? String {
             
             self._publisher = publish
-            print("PUBLISHER \(self._publisher)")
             
         }
         
@@ -154,39 +153,19 @@ class Book {
             
             self._lastCheckoutDate = checkoutDate
             
-            print("PUBLISHER \(self._lastCheckoutDate)")
-            
         }
         
         if let checkoutPerson = bookDictionary["lastCheckedOutBy"] as? String {
             
             self._lastCheckoutName = checkoutPerson
             
-            
         }
-        
-//        if let available = bookDictionary["lastCheckedOutBy"] as? String {
-//            
-//            if available == nil || available == "" {
-//                
-//                self._isAvailable = true
-//                
-//            } else {
-//                
-//                self._isAvailable = false
-//                
-//            }
-//            
-//            
-//        }
         
         if let bookID = bookDictionary["id"] as? Int {
             
             self._id = bookID
             
-            
         }
-        
         
     }
     
@@ -194,26 +173,17 @@ class Book {
     
     func reformatDateStamp(dateString: String) -> String {
         
-        print("THIS IS IN THE FUNCTION \(dateString)")
-        
         var newDate = NSDate()
         
         let dateFormatterFromString = NSDateFormatter()
         dateFormatterFromString.dateFormat = "yyyy-MM-dd HH:mm:ss"
         newDate = dateFormatterFromString.dateFromString(dateString)!
         
-        print("\(newDate)")
-        
         let dateFormatterToString = NSDateFormatter()
-        
-        
         dateFormatterToString.dateStyle = .LongStyle
         let newDateString = dateFormatterToString.stringFromDate(newDate)
         
-        
         return newDateString
-        
-        
         
     }
     

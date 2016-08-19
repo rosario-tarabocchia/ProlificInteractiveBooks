@@ -11,11 +11,11 @@ import Alamofire
 
 class APICalls {
     
+    typealias DownloadComplete = (success: Bool) -> ()
+    
     let URL_BASE = "http://prolific-interview.herokuapp.com/57b2232707c56b000966dd3e/"
     let URL_BOOKS = "books/"
     let URL_CLEAN = "clean/"
-    
-    typealias DownloadComplete = (success: Bool) -> ()
     
     init(){}
     
