@@ -20,6 +20,7 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
     var tagsIsEditing = false
     
     
+    @IBOutlet weak var availableImage: UIImageView!
     @IBOutlet weak var returnBtn: UIButton!
     @IBOutlet weak var checkoutBtn: UIButton!
     @IBOutlet weak var submitBtn: UIButton!
@@ -48,19 +49,27 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         authorLbl.text = book.author
         publisherLbl.text = book.publisher
         tagsLbl.text = book.tags
-        checkOutByLbl.text = book.lastCheckoutDate
         titleTxtFld.text = book.title
         authorTxtFld.text = book.author
         publisherTxtFld.text = book.publisher
         tagsTxtFld.text = book.tags
         
-        if book.lastCheckoutName == "" {
+        submitBtn.hidden = true
+        
+        if book.isAvailable {
             
-            checkOutByLbl.text = "AVAILABLE"
+            availableImage.image = UIImage(named: "avail")
+            
+            returnBtn.hidden = true
+            
             
         } else {
             
             checkOutByLbl.text = "\(book.lastCheckoutName) on \(book.lastCheckoutDate)"
+            
+            availableImage.image = UIImage(named: "check")
+            
+            checkoutBtn.hidden = true
             
         }
 
@@ -190,14 +199,6 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                 
             }
             
-            titleTxtFld.hidden = true
-            authorTxtFld.hidden = true
-            publisherTxtFld.hidden = true
-            tagsTxtFld.hidden = true
-            titleLbl.hidden = false
-            authorLbl.hidden = false
-            publisherLbl.hidden = false
-            tagsLbl.hidden = false
             
             apiCalls.updateCheckoutOrReturnBook(book.id, parameters: parameters, complete: {(success) -> Void in
                 
@@ -212,6 +213,28 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                     self.authorLbl.hidden = false
                     self.publisherLbl.hidden = false
                     self.tagsLbl.hidden = false
+                    
+                    self.tagsEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
+                    self.publisherEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
+                    self.titleEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
+                    self.authorEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
+                    
+                    self.submitBtn.hidden = true
+                    
+                    if self.book.isAvailable {
+                        
+                        
+                        
+                        self.returnBtn.hidden = true
+                        self.checkoutBtn.hidden = false
+                        
+                        
+                    } else {
+                        
+                        self.checkoutBtn.hidden = true
+                        self.returnBtn.hidden = false
+                        
+                    }
                     
                     
                 } else {
@@ -234,6 +257,10 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             if success {
                 
                 self.checkOutByLbl.text = ""
+                self.returnBtn.hidden = true
+                self.checkoutBtn.hidden = false
+                self.availableImage.image = UIImage(named: "avail")
+                
       
                 
             } else {
@@ -308,6 +335,9 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
                         if let name = inputTextField!.text {
                             
                             self.checkOutByLbl.text = "\(name) on \(nowLabel)"
+                            self.returnBtn.hidden = false
+                            self.checkoutBtn.hidden = true
+                            self.availableImage.image = UIImage(named: "check")
                             
                         }
                         
@@ -342,19 +372,28 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         
         if titleIsEditing {
             
+            hideCheckoutReturnButtons()
+            
             titleTxtFld.hidden = false
             titleLbl.hidden = true
 
             
             print(titleTxtFld.text)
             
+            titleEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
+            
+
+            
             
         }
             
         else {
             
+            checkOtherEdits()
+            titleTxtFld.resignFirstResponder()
             titleTxtFld.hidden = true
             titleLbl.hidden = false
+            titleEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
 
         
         }
@@ -367,8 +406,12 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         
         if authorIsEditing {
             
+            hideCheckoutReturnButtons()
+            
             authorTxtFld.hidden = false
             authorLbl.hidden = true
+            
+            authorEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
 
 
             
@@ -376,8 +419,12 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             
         else {
             
+            
+            checkOtherEdits()
+            authorTxtFld.resignFirstResponder()
             authorTxtFld.hidden = true
             authorLbl.hidden = false
+            authorEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
             
             
         }
@@ -390,8 +437,12 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         
         if publisherIsEditing {
             
+            hideCheckoutReturnButtons()
+            
             publisherTxtFld.hidden = false
             publisherLbl.hidden = true
+            
+            publisherEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
 
 
             
@@ -399,8 +450,11 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
             
         else {
             
+            checkOtherEdits()
+            publisherTxtFld.resignFirstResponder()
             publisherTxtFld.hidden = true
             publisherLbl.hidden = false
+            publisherEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
 
             
         }
@@ -413,16 +467,23 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         
         if tagsIsEditing {
             
+            hideCheckoutReturnButtons()
+            
             tagsTxtFld.hidden = false
             tagsLbl.hidden = true
-
+            
+            tagsEditBtn.setImage(UIImage(named: "greenEditButton"), forState: UIControlState.Normal)
             
         }
             
         else {
             
+            checkOtherEdits()
+            
+            tagsTxtFld.resignFirstResponder()
             tagsTxtFld.hidden = true
             tagsLbl.hidden = false
+            tagsEditBtn.setImage(UIImage(named: "redEditButton"), forState: UIControlState.Normal)
 
             
         }
@@ -439,6 +500,11 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         
         self.presentViewController(alert, animated: true, completion: nil)
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     
@@ -458,7 +524,55 @@ class CheckoutEditVC: UIViewController, UITextFieldDelegate{
         
     }
     
+    func hideSubmitButtons(){
+        
+        submitBtn.hidden = true
+        
+        if book.isAvailable {
+            
+            returnBtn.hidden = true
+            checkoutBtn.hidden = false
+            
+            
+        } else {
+            
+            checkoutBtn.hidden = true
+            returnBtn.hidden = false
+            
+        }
+        
+    }
     
+    func hideCheckoutReturnButtons(){
+        
+        submitBtn.hidden = false
+        returnBtn.hidden = true
+        checkoutBtn.hidden = true
+        
+        
+        
+        
+    }
+    
+    func checkOtherEdits() {
+        
+        if titleIsEditing || authorIsEditing || publisherIsEditing || tagsIsEditing {
+            
+            submitBtn.hidden = false
+            checkoutBtn.hidden = true
+            returnBtn.hidden = true
+            
+        } else {
+            
+            hideSubmitButtons()
+            
+            
+        }
+        
+        
+        
+        
+    }
 
     
     

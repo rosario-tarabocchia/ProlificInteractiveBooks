@@ -19,7 +19,7 @@ class BookCellTableViewCell: UITableViewCell {
         
         print(book.lastCheckoutName)
         
-        if book.lastCheckoutName == "" {
+        if book.isAvailable {
             
             cellImage.image = UIImage(named: "available")
             

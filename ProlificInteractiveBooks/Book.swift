@@ -19,6 +19,7 @@ class Book {
     private var _bookUrl: String!
     private var _lastCheckoutName: String!
     private var _lastCheckoutDate: String!
+    private var _isAvailable: Bool!
     
     var author: String {
         if _author == nil {
@@ -102,6 +103,21 @@ class Book {
         
     }
     
+    var isAvailable: Bool {
+        
+        if _lastCheckoutName == "" {
+            
+            self._isAvailable = true
+            
+        } else {
+            
+            self._isAvailable = false
+            
+        }
+        
+        return _isAvailable
+    }
+    
     
     init(bookDictionary: Dictionary<String, AnyObject>) {
         
@@ -148,6 +164,21 @@ class Book {
             
             
         }
+        
+//        if let available = bookDictionary["lastCheckedOutBy"] as? String {
+//            
+//            if available == nil || available == "" {
+//                
+//                self._isAvailable = true
+//                
+//            } else {
+//                
+//                self._isAvailable = false
+//                
+//            }
+//            
+//            
+//        }
         
         if let bookID = bookDictionary["id"] as? Int {
             

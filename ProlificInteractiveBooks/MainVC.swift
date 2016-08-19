@@ -274,7 +274,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
         self.view.endEditing(true)
 
     }
@@ -282,6 +281,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         self.view.endEditing(true)
     }
+    
+    func searchBarShouldReturn(searchBar: UISearchBar) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
     
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
