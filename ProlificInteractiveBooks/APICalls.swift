@@ -13,7 +13,7 @@ class APICalls {
     
     let URL_BASE = "http://prolific-interview.herokuapp.com/57b2232707c56b000966dd3e/"
     let URL_BOOKS = "books/"
-    let URL_CLEAR = "clear/"
+    let URL_CLEAN = "clean/"
     
     typealias DownloadComplete = (success: Bool) -> ()
     
@@ -67,11 +67,11 @@ class APICalls {
     
     func deleteAllBooks(complete: DownloadComplete){
         
-        Alamofire.request(.DELETE, URL_BASE + URL_CLEAR).validate().responseJSON { response in
+        Alamofire.request(.DELETE, "\(URL_BASE)\(URL_CLEAN)").validate(statusCode: [200]).responseJSON { response in
             
             switch response.result {
             case .Success:
-                complete(success: true)
+                print(response.result)
             case .Failure:
                 complete(success: false)
             }

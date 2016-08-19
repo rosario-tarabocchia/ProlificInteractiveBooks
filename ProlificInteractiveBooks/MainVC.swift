@@ -224,9 +224,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             
             self.apiCalls.deleteAllBooks({(success) -> Void in
                 
-                if success {
+                if !success {
                     
                     self.booksArray.removeAll()
+                    self.availableBooksArray.removeAll()
+                    self.bothFilterSearchArray.removeAll()
+                    self.filteredBooksArray.removeAll()
                     self.bookTableView.reloadData()
                     
                     let alert = UIAlertController(title: "Book List Deleted", message: "You have successfully deleted all the books on the list.", preferredStyle: .Alert)
