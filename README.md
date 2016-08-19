@@ -32,7 +32,7 @@ Built out all the API calls built in its own class. Added functionality where yo
 
 Day 4- 
 
-Created all the graphics and fixed the UI. The stackviews took me over 3 hours to sort out. Cleaned up the code and sorted out any bugs i found. 
+Created all the graphics and fixed the UI. The stackviews took me over 3 hours to sort out. Cleaned up the code and sorted out any bugs i found. Was not able to test the Facebook or Twitter share as the simulator does not allow for me to do that and my phone is upadated to 10 and I could not load it on there.
 
 FEATURES ON THE APP - 
 

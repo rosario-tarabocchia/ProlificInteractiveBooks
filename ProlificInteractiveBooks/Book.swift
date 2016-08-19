@@ -102,18 +102,26 @@ class Book {
     var isAvailable: Bool {
         
         get {
-        
-        if _lastCheckoutName == "" {
             
-            self._isAvailable = true
+            if _lastCheckoutName == nil {
+                
+                _lastCheckoutName = ""
+                
+            }
             
-        } else {
+            if _lastCheckoutName == "" {
+                
+                self._isAvailable = true
+                
+            } else {
+                
+                self._isAvailable = false
+                
+            }
             
-            self._isAvailable = false
+            return _isAvailable
             
         }
-        
-            return _isAvailable }
         
         set {
             
@@ -186,15 +194,6 @@ class Book {
         return newDateString
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
