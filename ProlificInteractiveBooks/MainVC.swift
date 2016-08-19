@@ -127,14 +127,38 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-           
-            book = booksArray[indexPath.row]
+            
+            if inSeachMode && bookSwitchOutlet.on {
+                
+                book = bothFilterSearchArray[indexPath.row]
+                
+            }
+                
+            else if !inSeachMode && bookSwitchOutlet.on {
+                
+                book = availableBooksArray[indexPath.row]
+                
+            }
+                
+            else if inSeachMode && !bookSwitchOutlet.on {
+                
+                book = filteredBooksArray[indexPath.row]
+                
+            }
+                
+            else {
+                
+                book = booksArray[indexPath.row]
+            }
+            
+            
 
             apiCalls.deleteOneBook(book.id, complete: {(success) -> Void in
             
                 if success {
+
+                    self.removeBookFromAllArrays(self.book)
                     
-                    self.booksArray.removeAtIndex(indexPath.row)
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                     self.bookTableView.reloadData()
                     
@@ -142,6 +166,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             })
         }
     }
+    
+//    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+//        let delete = UITableViewRowAction(style: .Destructive, title: "Delete") { (action, indexPath) in }
+//        
+//                delete.backgroundColor = UIColor(red: 0.925, green: 0.125, blue: 0.141, alpha: 1.0)
+//            
+//            return [delete]
+//        
+//        }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let bookSelection : Book!
@@ -239,7 +272,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
-        
+        self.view.endEditing(true)
 
     }
     
@@ -326,7 +359,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
         if bookSwitchOutlet.on {
             
-            bookAvailableLbl.text = "Books available"
+            bookAvailableLbl.text = "books available"
+            bookAvailableLbl.textColor = UIColor(red: 0.478, green: 0.753, blue: 0.27, alpha: 1.0)
             
             if inSeachMode {
                 
@@ -340,7 +374,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         } else {
             
             
-            bookAvailableLbl.text = "All Books"
+            bookAvailableLbl.text = "all books"
+            bookAvailableLbl.textColor = UIColor.darkGrayColor()
             print("Switch is off")
             //            bookSwitchOutlet.setOn(false, animated:true)
 
@@ -384,7 +419,25 @@ override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     }
     
     
+    @IBAction func prolificBtnPressed(sender: AnyObject) {
         
+        let openLink = NSURL(string : "http://www.prolificinteractive.com/")
+        UIApplication.sharedApplication().openURL(openLink!)
+        
+        
+    }
+    
+    func removeBookFromAllArrays(book: Book){
+        
+        self.filteredBooksArray.remove(book)
+        self.booksArray.remove(book)
+        self.availableBooksArray.remove(book)
+        self.bothFilterSearchArray.remove(book)
+        
+    }
+    
 
 }
+
+
 
