@@ -23,6 +23,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     @IBOutlet weak var bookTableView: UITableView!
     @IBOutlet weak var bookAvailableLbl: UILabel!
     @IBOutlet weak var bookSwitchOutlet: UISwitch!
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    
     
     //MARK: Override Functions
     
@@ -372,11 +374,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func downloadBooks(){
         
+        activitySpinner.startAnimating()
+        
         apiCalls.getBooks({ (array) -> Void in
             
             self.booksArray = array
             
             self.bookTableView.reloadData()
+            
+            self.activitySpinner.stopAnimating()
             
         })
     }
